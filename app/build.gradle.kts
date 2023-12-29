@@ -51,6 +51,9 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+    // PasscodeView
+    implementation("online.devliving:passcodeview:1.0.3")
+
     // Coroutine ViewModel Lifecycle Scopes
     implementation("androidx.fragment:fragment-ktx:1.6.2")
 }

@@ -2,9 +2,13 @@
 <androidx.appcompat.widget.AppCompatButton xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/buttonNumber"
-    android:layout_width="match_parent"
+    android:layout_width="75dp"
+    android:layout_margin="20dp"
     android:layout_height="75dp"
     android:textColor="@color/black"
     tools:text="1"
     android:textSize="25sp"
     android:background="@drawable/circle_button" />
+
+
+

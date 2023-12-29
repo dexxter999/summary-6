@@ -1,25 +1,22 @@
-package com.example.summary6
+package com.example.summary6.presentation
 
-import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.summary6.adapters.KeyboardAdapter
-import com.example.summary6.adapters.PincodeAdapter
 import com.example.summary6.core.base.BaseFragment
 import com.example.summary6.core.helper.Constants
 import com.example.summary6.core.helper.Listeners
 import com.example.summary6.core.helper.Observer
-import com.example.summary6.core.keyboardItems
+import com.example.summary6.core.helper.keyboardItems
 import com.example.summary6.databinding.FragmentMainBinding
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::inflate), Listeners, Observer {
+class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::inflate), Listeners,
+    Observer {
 
     private val keyboardAdapter: KeyboardAdapter by lazy { KeyboardAdapter() }
-    private val flow = MutableStateFlow("")
-
+    private val viewModel: MainViewModel by viewModels()
     override fun init() {
         setUpRecycler()
         listeners()
@@ -28,24 +25,25 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
 
     override fun listeners() {
         keyboardAdapter.onNumberClick = {
-            flow.value = flow.value + it.toString()
+            viewModel.onEvent(MainEvent.NumberClick(it))
         }
         keyboardAdapter.onDeleteClick = {
-            flow.value = flow.value.dropLast(1)
+            viewModel.onEvent(MainEvent.DeleteClick)
         }
 
-        binding.etPasscode.addTextChangedListener {
-            if (flow.value == Constants.PINCODE) {
-                Snackbar.make(binding.root, "Success!", Snackbar.LENGTH_LONG).show()
-                flow.value = ""
+        keyboardAdapter.onFingerprintClick = {
+            Snackbar.make(binding.root, Constants.FINGERPRINT_MESSAGE, Snackbar.LENGTH_LONG).show()
+        }
+
+        binding.pinCode.setPasscodeEntryListener {
+            if (viewModel.pinState.value == Constants.PIN_CODE) {
+                Snackbar.make(binding.root, Constants.SUCCESS, Snackbar.LENGTH_LONG).show()
+                viewModel.pinState.value = ""
             } else {
-                Snackbar.make(binding.root, "Incorrect PIN!", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.root, Constants.INCORRECT, Snackbar.LENGTH_LONG).show()
             }
         }
     }
-
-
-
 
     private fun setUpRecycler() = with(binding.rvKeyboard) {
         adapter = keyboardAdapter
@@ -54,11 +52,9 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
 
     override fun observers() {
         lifecycleScope.launch {
-            flow.collect {
-                binding.etPasscode.setText(it)
+            viewModel.pinState.collect {
+                binding.pinCode.setText(it)
             }
         }
     }
-
-
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainFragment">
+    tools:context=".presentation.MainFragment">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/appCompatTextView"
@@ -22,41 +22,39 @@
         android:id="@+id/appCompatTextView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
         android:text="@string/enter_your_passcode"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/rvPincode"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView2"-->
-<!--        tools:listitem="@layout/pincode_filled_item" />-->
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etPasscode"
-        android:layout_width="match_parent"
+    <online.devliving.passcodeview.PasscodeView
+        android:id="@+id/pinCode"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/enter_pin"
-        android:maxLength="4"
+        app:controlColor="@color/grey"
+        app:digitColorFilled="@color/green"
+        app:digitRadius="10dp"
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appCompatTextView2" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvKeyboard"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="110dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:nestedScrollingEnabled="false"
+        android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/tvForgotPassword"
-        app:layout_constraintTop_toBottomOf="@+id/etPasscode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pinCode"
         app:spanCount="3"
         tools:listitem="@layout/button_number" />
 
@@ -64,9 +62,9 @@
         android:id="@+id/tvForgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
         android:text="@string/forgot_password"
         android:textSize="16sp"
-        android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

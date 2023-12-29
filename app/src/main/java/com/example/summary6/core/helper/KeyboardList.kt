@@ -1,4 +1,4 @@
-package com.example.summary6.core
+package com.example.summary6.core.helper
 
 import com.example.summary6.data.KeyboardItem
 

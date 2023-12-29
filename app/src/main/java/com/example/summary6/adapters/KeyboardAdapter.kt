@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.summary6.core.KeyboardType
+import com.example.summary6.core.helper.KeyboardType
 import com.example.summary6.data.KeyboardItem
 import com.example.summary6.databinding.ButtonDeleteBinding
 import com.example.summary6.databinding.ButtonFingerprintBinding
@@ -43,21 +43,33 @@ class KeyboardAdapter : ListAdapter<KeyboardItem, RecyclerView.ViewHolder>(Keybo
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             KeyboardType.NUMBER.type -> NumberItemViewHolder(
-                ButtonNumberBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                ButtonNumberBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
             )
 
-            KeyboardType.DELETE.type -> DeleteItemViewHolder(
-                ButtonDeleteBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            KeyboardType.FINGERPRINT.type -> FingerPrintItemViewHolder(
+                ButtonFingerprintBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
             )
 
-            else -> FingerPrintItemViewHolder(
-                ButtonFingerprintBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            else -> DeleteItemViewHolder(
+                ButtonDeleteBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
             )
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder) {
+        when (holder) {
             is NumberItemViewHolder -> holder.bind(getItem(position))
             is DeleteItemViewHolder -> holder.bind()
             is FingerPrintItemViewHolder -> holder.bind()
